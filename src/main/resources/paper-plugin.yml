@@ -1,0 +1,5 @@
+name: WanderingPlus
+version: '0.0.1'
+main: org.hn.wanderingplus.WanderingPlus
+api-version: '1.21.7'
+authors: [ HeyNight0712 ]
