@@ -16,8 +16,8 @@ class TraderListener: Listener {
         val summoned = TraderSpawnManager.getSummonedPlayers()
         if (summoned.isEmpty()) return
 
-        val randomUUID = summoned.random()
-        TraderSpawnManager.restart(randomUUID)
+        val randomUUID = summoned.first()
+        TraderSpawnManager.onTraderDespawn(randomUUID)
         WanderingPlus.instance.logger.info("Restarted trader for $randomUUID")
     }
 }

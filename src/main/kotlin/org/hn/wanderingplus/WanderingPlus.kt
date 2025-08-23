@@ -3,6 +3,7 @@ package org.hn.wanderingplus
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents
 import org.bukkit.plugin.java.JavaPlugin
 import org.hn.wanderingplus.command.CommandRegistry
+import org.hn.wanderingplus.command.sub.InfoCommand
 import org.hn.wanderingplus.command.sub.SpawnCommand
 import org.hn.wanderingplus.listener.PlayerListener
 import org.hn.wanderingplus.listener.TraderListener
@@ -17,7 +18,9 @@ class WanderingPlus: JavaPlugin() {
     override fun onEnable() {
         instance = this
         TraderSpawnManager.start(this)
-        CommandRegistry.register(SpawnCommand())
+        CommandRegistry
+            .register(SpawnCommand())
+            .register(InfoCommand())
 
         server.pluginManager.registerEvents(PlayerListener(), this)
         server.pluginManager.registerEvents(TraderListener(), this)

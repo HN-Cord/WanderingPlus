@@ -7,16 +7,21 @@ import io.papermc.paper.command.brigadier.Commands
 object CommandRegistry {
     private val subs = mutableListOf<SubCommand>()
 
-    fun register(sub: SubCommand) {
+    fun register(sub: SubCommand): CommandRegistry {
         subs.add(sub)
+        return this
     }
 
     internal fun buildRoot(): LiteralCommandNode<CommandSourceStack> {
         val root = Commands.literal("wanderingplus")
         subs.forEach { sub ->
-            sub.permission?.let { root.requires { src -> src.sender.hasPermission(it) }
+            val subCommand = sub.build()
+            // 只有當權限不為 null 時才添加權限檢查
+            if (sub.permission != null) {
+                subCommand.requires { src -> src.sender.hasPermission(sub.permission!!) }
+            }
+            root.then(subCommand)
 
-            root.then(sub.build()) }
         }
         return root.build()
     }
